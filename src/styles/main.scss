@@ -2,10 +2,11 @@
 @import 'tools/breakpoint';
 @import 'tools/mixins';
 
+@import 'settings/normalize';
 @import 'settings/global';
-@import 'settings/colors';
-@import 'settings/fonts';
 @import 'settings/vars';
+@import 'settings/fonts';
+@import 'settings/colors';
 
 @import 'elements/lists';
 @import 'elements/anchors';

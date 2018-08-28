@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/franklinlugo/html-css-js-boilerplate#readme",
   "dependencies": {
-    "foundation-sites": "^6.5.0-rc.2",
     "normalize.css": "^8.0.0"
   },
   "devDependencies": {
