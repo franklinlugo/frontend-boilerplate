@@ -75,7 +75,7 @@ gulp.task('clean:partials', function () {
 function scripts() {
   return browserify('./src/js/main.js')
     .transform(babelify, {
-      presets: ['env'],
+      presets: ['@babel/preset-env'],
     })
     .bundle()
     .on(
