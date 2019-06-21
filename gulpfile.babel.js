@@ -15,14 +15,14 @@ import sourcemaps from 'gulp-sourcemaps';
 import buffer from 'vinyl-buffer';
 import browserSync from 'browser-sync';
 import del from 'del';
+import { path } from 'browserify/lib/builtins';
+
 const server = browserSync.create();
 
 /* config vars */
 const config = {
   plugins: [
-    autoprefixer({
-      browsers: 'last 2 versions',
-    }),
+    autoprefixer(),
     flexbugsFixes,
     cssnano({
       discardComments: {
@@ -33,10 +33,21 @@ const config = {
   ],
 };
 
+const paths = {
+  styles: {
+    src: 'src/styles/main.scss',
+    dest: 'public/',
+  },
+  scripts: {
+    src: 'src/js/main.js',
+    dest: 'public/',
+  },
+};
+
 /**
  * handle errors compilation, task errors and don't stop the gulp task
  */
-const onError = function (err) {
+const onError = function(err) {
   console.log('Se ha producido un error: ', err.message);
   this.emit('end');
 };
@@ -46,7 +57,7 @@ const onError = function (err) {
  */
 function styles() {
   return gulp
-    .src('./src/styles/main.scss')
+    .src(paths.styles.src)
     .pipe(
       plumber({
         errorHandler: onError,
@@ -57,7 +68,7 @@ function styles() {
     .pipe(postcss(config.plugins))
     .pipe(rename('main.css'))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('public/'))
+    .pipe(gulp.dest(paths.styles.dest))
     .pipe(browserSync.stream())
     .pipe(notify({ message: 'Styles task ended' }));
 }
@@ -65,7 +76,7 @@ function styles() {
 /**
  * Clean partials dir
  */
-gulp.task('clean:partials', function () {
+gulp.task('clean:partials', function() {
   return del(['public/front/css/partials/**/*.*']);
 });
 
@@ -73,7 +84,7 @@ gulp.task('clean:partials', function () {
  * Bundling of javascript files
  */
 function scripts() {
-  return browserify('./src/js/main.js')
+  return browserify(paths.scripts.src)
     .transform(babelify, {
       presets: ['@babel/preset-env'],
     })
@@ -94,7 +105,7 @@ function scripts() {
     )
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('public/'))
+    .pipe(gulp.dest(paths.scripts.dest))
     .pipe(browserSync.stream())
     .pipe(
       notify({
