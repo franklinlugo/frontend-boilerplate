@@ -1,3 +1,19 @@
-## HTML-CSS-JS-boilerplate
+## HTML CSS JS boilerplate
 
-Boilerplate to develop simple HTML, CSS and Javascript web pages.
+- **Gulp**
+- **SASS**
+- **Postcss**
+
+## Use
+
+Executes
+
+```sh
+npm install || yarn
+```
+
+then
+
+```sh
+npm run start || yarn start
+```
